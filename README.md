@@ -33,3 +33,5 @@ Sin WSDL:
 Requisito (opcional): Un servicio SOAP puede funcionar sin un archivo WSDL (Web Services Description Language). Aunque WSDL facilita la descripción del servicio, no es obligatorio para implementar SOAP en PHP.
 Implementación:
 En este caso, hemos optado por no utilizar un archivo WSDL (null en SoapServer y SoapClient). En lugar de eso, definimos la URI y la ubicación manualmente, simplificando la implementación.
+
+Para probar el codigo insertar esta carpeta en xampp htdocs y correr "http://localhost:8000/soap/client.php" en su buscador el puerto que estoy ocupando es el 8000 debes cambiar el puerto de tu xampp apache a este mismo
