@@ -1,17 +1,28 @@
 <?php
-try {
-    // Crear un cliente SOAP y conectar con el servidor
-    $client = new SoapClient(null, [
-        'location' => "http://localhost:8000/soap/server.php",
-        'uri' => "http://localhost:8000/soap/server.php",
-        'trace' => 1 // Habilita la depuración
-    ]);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['message']) && !empty($_POST['message'])) {
+        $newMessage = htmlspecialchars($_POST['message']); 
+        
+        try {
+            // Cambia la IP y puerto aquí
+            $client = new SoapClient(null, [
+                'location' => "http://192.168.1.6:8000/soap/server.php",
+                'uri' => "http://192.168.1.6:8000/soap/server.php",
+                'trace' => 1
+            ]);
 
-    // Llamar al método 'sayHello' en el servidor SOAP
-    $response = $client->sayHello("Mundo");
-    echo $response;
-} catch (SoapFault $e) {
-    // Manejo de errores
-    echo "Error: " . $e->getMessage();
+            // Enviar el mensaje personalizado al servidor
+            $response = $client->setMessage($newMessage);
+            echo $response . "<br>";
+
+            // Obtener el mensaje actualizado del servidor
+            $currentMessage = $client->getMessage();
+            echo "El mensaje del servidor es: " . $currentMessage;
+        } catch (SoapFault $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } else {
+        echo "Por favor, introduce un mensaje.";
+    }
 }
 ?>

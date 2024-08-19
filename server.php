@@ -1,17 +1,19 @@
 <?php
-// Definir la clase que contiene los métodos del servicio SOAP
 class HelloWorldService {
-    public function sayHello($name) {
-        return "Hola, " . $name . "!";
+    private $message = "Hola Mundo!";
+
+    public function setMessage($newMessage) {
+        $this->message = $newMessage;
+        return "El mensaje es: " . $this->message;
+    }
+
+    public function getMessage() {
+        return $this->message;
     }
 }
 
-// Crear el servidor SOAP
-$server = new SoapServer(null, ['uri' => "http://localhost:8000/soap/server.php"]);
-
-// Asignar la clase al servidor SOAP
+// Cambia la IP y puerto a la IP externa y puerto donde corre Apache
+$server = new SoapServer(null, ['uri' => "http://192.168.1.6:8000/soap/server.php"]);
 $server->setClass('HelloWorldService');
-
-// Procesar las solicitudes SOAP
 $server->handle();
 ?>
